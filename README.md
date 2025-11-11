@@ -24,7 +24,7 @@ This project classifies tweets as **Positive**, **Negative**, or **Neutral** usi
 tweet_sentiment_analysis/
 ├── app.py                 # Streamlit web application
 ├── train_model.py         # Model training script
-├── main.ipynb            # Jupyter notebook with analysis
+├── utils.py              # Shared preprocessing functions
 ├── requirements.txt      # Python dependencies
 ├── .gitignore           # Git ignore file
 ├── README.md            # Project documentation
@@ -68,8 +68,8 @@ streamlit run app.py
 1. **Sentiment Analyzer**: Enter text to get real-time sentiment prediction
 2. **Data Visualization**: View dataset statistics and distributions
 
-### Jupyter Notebook
-Open `main.ipynb` to see the complete analysis and model development process.
+### Model Training
+Run `train_model.py` to see the complete training process with accuracy metrics.
 
 ## 🔧 Technical Details
 

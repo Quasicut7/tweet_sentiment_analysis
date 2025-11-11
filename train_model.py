@@ -1,42 +1,10 @@
 import pandas as pd
-import re
 import pickle
-from nltk.stem import WordNetLemmatizer
-from nltk.corpus import stopwords
 from sklearn.linear_model import LogisticRegression
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-import nltk
-
-# Download required NLTK data
-try:
-    nltk.data.find('corpora/wordnet')
-    nltk.data.find('corpora/stopwords')
-except LookupError:
-    nltk.download('wordnet')
-    nltk.download('stopwords')
-
-def cleaner(string):
-    # Remove URLs
-    string = re.sub(r"http\S+|www\S+|https\S+", "", string)
-    # Replace mentions with token
-    string = re.sub(r"@\w+", "[USER]", string)
-    # Remove hashtag symbol but keep text
-    string = re.sub(r"#(\w+)", r"\1", string)
-    # Remove special characters but keep emoticons
-    string = re.sub(r"[^a-zA-Z0-9\s:)(:D;)\-_]", "", string)
-    # Handle repeated characters (e.g., "sooooo" -> "soo")
-    string = re.sub(r"(.)\1{2,}", r"\1\1", string)
-    # Remove extra whitespace
-    string = re.sub(r"\s+", " ", string)
-    string = string.lower().strip()
-    return string
-
-def lemmatize_text(string):
-    lemmatizer = WordNetLemmatizer()
-    words = [lemmatizer.lemmatize(word) for word in string.split()]
-    return ' '.join(words)
+from utils import cleaner, lemmatize_text
 
 print("Loading dataset...")
 df = pd.read_csv("database/tweets.csv", names=['sentiment', 'ids', 'date', 'flag', 'user', 'text'])

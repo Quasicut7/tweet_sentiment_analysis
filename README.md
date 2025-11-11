@@ -4,7 +4,7 @@ A machine learning project that analyzes tweet sentiment using Logistic Regressi
 
 ## 📊 Project Overview
 
-This project classifies tweets as **Positive** or **Negative** using:
+This project classifies tweets as **Positive**, **Negative**, or **Neutral** using:
 - **Dataset**: Sentiment140 (1.6M labeled tweets)
 - **Model**: Logistic Regression with optimized hyperparameters
 - **Accuracy**: ~82-85%

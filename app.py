@@ -78,7 +78,15 @@ def predict_sentiment(text, model, vectorizer):
     prediction = model.predict(text_vec)[0]
     probability = model.predict_proba(text_vec)[0]
     
-    if prediction == 0:
+    # Calculate confidence based on how close probabilities are
+    prob_diff = abs(probability[0] - probability[1])
+    
+    # If probabilities are close (< 0.3 difference), it's neutral
+    if prob_diff < 0.3:
+        sentiment = "Neutral"
+        # Neutral confidence: how close the probabilities are (inverted)
+        confidence = 1 - prob_diff
+    elif prediction == 0:
         sentiment = "Negative"
         confidence = probability[0]
     else:
@@ -89,7 +97,7 @@ def predict_sentiment(text, model, vectorizer):
 
 # Streamlit App
 st.title("🐦 Tweet Sentiment Analysis")
-st.write("Enter a tweet or text to analyze its sentiment!")
+st.write("Enter a tweet or text to analyze its sentiment: **Positive**, **Negative**, or **Neutral**!")
 
 # Sidebar for navigation
 st.sidebar.title("Navigation")
@@ -129,11 +137,17 @@ else:
                 with col1:
                     if sentiment == "Positive":
                         st.success(f"😊 **{sentiment}**")
-                    else:
+                    elif sentiment == "Negative":
                         st.error(f"😞 **{sentiment}**")
+                    else:
+                        st.info(f"😐 **{sentiment}**")
                 
                 with col2:
-                    st.metric("Confidence", f"{confidence:.2%}")
+                    st.metric("Confidence", f"{confidence:.1%}")
+                    if confidence < 0.2:
+                        st.caption("⚠️ Low confidence")
+                    elif confidence > 0.5:
+                        st.caption("✅ High confidence")
                 
                 # Show processed text
                 with st.expander("See processed text"):

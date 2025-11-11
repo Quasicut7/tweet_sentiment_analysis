@@ -1,0 +1,6 @@
+database/tweets.csv
+sentiment_model.pkl
+vectorizer.pkl
+__pycache__/
+*.pyc
+.DS_Store
